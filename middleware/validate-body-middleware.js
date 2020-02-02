@@ -20,7 +20,7 @@ function checkMissingFields(reqBody, endpoint) {
 
 function validateBody(req, res, next) {
   if (Object.entries(req.body).length > 0) {
-    const endpoint = req.url.replace('/', '')
+    const endpoint = req.url.replace('/', '') //Get rid of / in URL
     const missingFields = checkMissingFields(req.body, endpoint);
     if (missingFields.length > 0) {
       res.status(400).json({
