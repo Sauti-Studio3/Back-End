@@ -19,7 +19,6 @@ router.get('/users', (req, res) => {
 });
 
 router.post('/register', validateBody, (req, res) => {
-  // console.log(req.url);
   const user = req.body;
   const hash = bc.hashSync(user.password, 10);
   user.password = hash;
@@ -36,7 +35,6 @@ router.post('/register', validateBody, (req, res) => {
 });
 
 router.post('/login', validateBody, (req, res) => {
-  // console.log(req.url.replace('/', ''));
   const { username, password } = req.body;
   Users.findBy({ username })
     .first()
