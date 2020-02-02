@@ -4,7 +4,7 @@ module.exports = {
 
   development: {
     client: 'pg',
-    connection: 'postgres://localhost/sauti_database',
+    connection: process.env.DATABASE_URL,
     migrations: {
       directory: './data/migrations'
     },
