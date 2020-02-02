@@ -2,6 +2,7 @@ const router = require('express').Router();
 const bc = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { jwtSecret } = require('../config/secrets');
+const validateBody = require('../middleware/validate-body-middleware');
 const Users = require('./auth-model');
 
 router.get('/users', (req, res) => {
@@ -17,7 +18,8 @@ router.get('/users', (req, res) => {
     });
 });
 
-router.post('/register', (req, res) => {
+router.post('/register', validateBody, (req, res) => {
+  // console.log(req.url);
   const user = req.body;
   const hash = bc.hashSync(user.password, 10);
   user.password = hash;
@@ -33,7 +35,8 @@ router.post('/register', (req, res) => {
     });
 });
 
-router.post('/login', (req, res) => {
+router.post('/login', validateBody, (req, res) => {
+  // console.log(req.url.replace('/', ''));
   const { username, password } = req.body;
   Users.findBy({ username })
     .first()
