@@ -14,7 +14,7 @@ server.use(cors());
 server.use(express.json());
 
 server.use('/api/auth', authRouter);
-server.use('/api/users', restricted, usersRouter)
+server.use('/api/users', usersRouter) //TODO: Add restricted middleware!
 // server.use('/api/flows', flowsRouter);
 
 module.exports = server;
