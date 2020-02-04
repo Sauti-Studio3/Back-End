@@ -1,12 +1,13 @@
 const router = require('express').Router();
 const Flows = require('../flows/flows-model');
 const Pages = require('../pages/pages-model');
+const validateBody = require('../middleware/validate-body-middleware');
 
-router.get('/',  (req, res) => {
-  res.status(200).json({message: 'You got to the flows endpoint!'})
-});
+// router.get('/',  (req, res) => {
+//   res.status(200).json({message: 'You got to the flows endpoint!'})
+// });
 
-router.get('/:id', (req, res) => {
+router.get('/:id', validateFlowId, (req, res) => {
   const { id } = req.params;
   Flows.findById(id)
     .then(flow => {
@@ -27,6 +28,49 @@ router.get('/:id', (req, res) => {
       })
     })
 })
+
+router.put('/:id', validateFlowId, validateBody('flows'), (req, res) => {
+  const { id } = req.params;
+  const changes = req.body
+  Flows.update(changes, id)
+    .then(flow => {
+      res.status(200).json(flow);
+    })
+    .catch(error => {
+      console.log(error);
+      res.status(500).json({
+        error: 'Failed to update flow.'
+       });
+    });
+});
+
+router.delete('/:id', validateFlowId, (req, res) => {
+  const { id } = req.params;
+  Flows.remove(id)
+    .then(flow => {
+      res.status(200).json(flow);
+    })
+    .catch(error => {
+      console.log(error);
+      res.status(500).json({
+        error: 'Failed to delete flow.'
+      })
+    })
+})
+
+function validateFlowId(req, res, next) {
+  const { id } = req.params;
+  Flows.findById(id) 
+    .then(flow => {
+      if (flow) {
+        next();
+      } else {
+        res.status(404).json({
+          message: `Could not find flow with id ${id}.`
+        });
+      }
+    }) ;
+}
 
 
 module.exports = router;

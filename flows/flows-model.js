@@ -28,10 +28,23 @@ function add(flow) {
     });
 }
 
-function update() {
-  
+function update(changes, id) {
+  return db('flows')
+    .where({ id })
+    .update(changes)
+    .then(() => {
+      return findById(id);
+    });
 }
 
-function remove() {
-  
+function remove(id) {
+  return findById(id)
+    .then(flow => {
+      return db('flows')
+        .where({ id })
+        .del()
+        .then(() => {
+          return flow;
+        });
+    });
 }

@@ -33,8 +33,6 @@ router.get('/:id/flows', validateUserId, (req, res) => {
     });
 });
 
-
-
 router.post('/:id/flows', validateUserId, validateBody('flows'), (req, res) => {
   const { id } = req.params;
   const flow = {
@@ -60,7 +58,7 @@ function validateUserId(req, res, next) {
         next();
       } else {
         res.status(404).json({
-          message: 'Could not find user with given id'
+          message: `Could not find user with id ${id}.`
         });
       }
     }) ;
