@@ -16,12 +16,13 @@ exports.up = function(knex) {
       .string('password', 128)
       .notNullable();
 
-    users.string('country', 128)
+    users.string('country', 128);
 
-    users.integer('age')
+    users.integer('age');
   })
 };
 
 exports.down = function(knex) {
   return knex.schema.dropTableIfExists('users');
 };
+

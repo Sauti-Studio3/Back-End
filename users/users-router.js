@@ -11,6 +11,15 @@ router.get('/:id/flows', (req, res) => {
   res.status(200).json(dummyFlowArray);
 })
 
+router.post('/:id/flows', (req, res) => {
+  
+  const { id } = req.params;
+  const flow = {
+    ...req.body,
+    user_id: id
+  }
+})
+
 router.use('/flows', flowsRouter);
 router.use('/pages', pagesRouter);
 router.use('/options', optionsRouter);
@@ -24,7 +33,7 @@ const dummyFlowArray = [
       {
         id: 5,
         name: 'home',
-        description: 'the first page in my app',
+        content: 'the first page in my app',
         options: [
           {
             id: 2,
@@ -43,7 +52,7 @@ const dummyFlowArray = [
       {
         id: 9,
         name: 'sign up',
-        description: 'users sign up here',
+        content: 'users sign up here',
         options: [
           {
             id: 3,
