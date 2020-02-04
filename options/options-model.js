@@ -1,22 +1,20 @@
 const db = require('../data/db-config');
 
 module.exports = {
-  findByFlowId,
+  findByPageId,
   findById,
   add,
   update,
   remove
 }
 
-function findByFlowId(flowId) {
-  return db('pages')
-    .where({flow_id: flowId});
+function findByPageId(pageId) {
+  return db('options')
+    .where({page_id: pageId});
 }
 
-function findById(id) {
-  return db('pages')
-    .where({ id })
-    .first();
+function findById() {
+  
 }
 
 function add() {
