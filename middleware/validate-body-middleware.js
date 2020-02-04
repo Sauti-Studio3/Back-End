@@ -7,6 +7,15 @@ const requiredFields = {
   login: [
     'username',
     'password'
+  ],
+  flows: [
+    'name'
+  ],
+  pages: [
+    'name'
+  ],
+  options: [
+    'name'
   ]
 };
 
