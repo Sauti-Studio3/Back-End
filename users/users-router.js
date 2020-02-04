@@ -4,6 +4,7 @@ const pagesRouter = require('../pages/pages-router');
 const optionsRouter = require('../options/options-router');
 const Users = require('../users/users-model');
 const Flows = require('../flows/flows-model');
+const validateBody = require('../middleware/validate-body-middleware');
 // const Pages = require('../pages/pages-model');
 
 router.get('/', (req, res) => {
@@ -34,13 +35,21 @@ router.get('/:id/flows', validateUserId, (req, res) => {
 
 
 
-router.post('/:id/flows', validateUserId, (req, res) => {
-  
+router.post('/:id/flows', validateUserId, validateBody('flows'), (req, res) => {
   const { id } = req.params;
   const flow = {
     ...req.body,
     user_id: id
-  }
+  };
+  Flows.add(flow)
+    .then(flow => {
+      res.status(201).json(flow);
+    })
+    .catch(error => {
+      res.status(500).json({
+        error: 'Failed to save new flow.'
+      })
+    })
 })
 
 function validateUserId(req, res, next) {

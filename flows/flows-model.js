@@ -20,8 +20,12 @@ function findById(id) {
     .first();
 }
 
-function add() {
-  
+function add(flow) {
+  return db('flows')
+    .insert(flow)
+    .then(([id]) => {
+      return findById(id);
+    });
 }
 
 function update() {

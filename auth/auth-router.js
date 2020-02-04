@@ -2,8 +2,9 @@ const router = require('express').Router();
 const bc = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { jwtSecret } = require('../config/secrets');
-const validateBody = require('../middleware/validate-body-middleware');
 const Users = require('./auth-model');
+const validateBody = require('../middleware/validate-body-middleware');
+
 
 router.get('/users', (req, res) => {
   Users.find()
@@ -18,7 +19,7 @@ router.get('/users', (req, res) => {
     });
 });
 
-router.post('/register', validateBody, (req, res) => {
+router.post('/register', validateBody('register'), (req, res) => { //TODO: Put validateBody back in if necessary.
   const user = req.body;
   const hash = bc.hashSync(user.password, 10);
   user.password = hash;
@@ -34,14 +35,17 @@ router.post('/register', validateBody, (req, res) => {
     });
 });
 
-router.post('/login', validateBody, (req, res) => {
+router.post('/login', validateBody('login'), (req, res) => {
   const { username, password } = req.body;
   Users.findBy({ username })
     .first()
     .then(user => {
       if(user && bc.compareSync(password, user.password)) {
         const token = signToken(user);
-        res.status(200).json({token: token})
+        res.status(200).json({
+          token: token,
+          user: user
+        })
       } else {
         res.status(401).json({
           message: 'Invalid login credentials. Please try again.'
