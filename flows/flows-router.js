@@ -57,9 +57,27 @@ router.delete('/:id', validateFlowId, restrictUser('flows'), (req, res) => {
       console.log(error);
       res.status(500).json({
         error: 'Failed to delete flow.'
-      })
+      });
+    });
+});
+
+router.post('/:id/pages', validateFlowId, restrictUser('flows'), validateBody('pages'), (req, res) => {
+  const { id } = req.params;
+  const page = {
+    ...req.body,
+    flow_id: id
+  };
+  Pages.add(page)
+    .then(page => {
+      res.status(201).json(page);
     })
-})
+    .catch(error => {
+      console.log(error);
+      res.status(500).json({
+        error: 'Failed to save new page.'
+      });
+    });
+});
 
 function validateFlowId(req, res, next) {
   const { id } = req.params;

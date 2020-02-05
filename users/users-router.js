@@ -12,7 +12,7 @@ router.get('/:id/flows', validateUserId, restrictUser('users'), (req, res) => {
   const { id } = req.params;
   Flows.findByUserId(id)
     .then(flows => {
-      // const flowsWithPages = flows.map(async flow => {
+      // const flowsWithPages = flows.map(async flow => { //TODO: Ask Jimmy (if time);
       //   let pages = await Pages.findByFlowId(flow.id);
       //   console.log(flow, pages);
       //   return {
@@ -43,9 +43,9 @@ router.post('/:id/flows', validateUserId, validateBody('flows'), (req, res) => {
     .catch(error => {
       res.status(500).json({
         error: 'Failed to save new flow.'
-      })
-    })
-})
+      });
+    });
+});
 
 function validateUserId(req, res, next) {
   const { id } = req.params;

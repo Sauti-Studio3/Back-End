@@ -19,14 +19,31 @@ function findById(id) {
     .first();
 }
 
-function add() {
-  
+function add(page) {
+  return db('pages')
+    .insert(page)
+    .then(([id]) => {
+      return findById(id);
+    });
 }
 
-function update() {
-  
+function update(changes, id) {
+  return db('pages')
+    .where({ id })
+    .update(changes)
+    .then(() => {
+      return findById(id);
+    });
 }
 
-function remove() {
-  
+function remove(id) {
+  return findById(id)
+    .then(page => {
+      return db('pages')
+        .where({ id })
+        .del()
+        .then(() => {
+          return page;
+        });
+    });
 }
