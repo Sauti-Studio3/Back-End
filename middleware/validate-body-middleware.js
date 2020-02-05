@@ -33,8 +33,6 @@ function validateBody(endpoint) {
       next();
     } else {
       if (Object.entries(req.body).length > 0) {
-        // const endpoint = req.url.replace('/', '') //Get rid of / in URL
-        console.log(endpoint);
         const missingFields = checkMissingFields(req.body, endpoint);
         if (missingFields.length > 0) {
           res.status(400).json({

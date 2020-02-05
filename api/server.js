@@ -5,7 +5,6 @@ const helmet = require('helmet');
 const restricted = require('../middleware/restricted-middleware');
 const authRouter = require('../auth/auth-router');
 const usersRouter = require('../users/users-router');
-// const flowsRouter = require('../flows/flows-router');
 
 const server = express();
 
@@ -14,7 +13,6 @@ server.use(cors());
 server.use(express.json());
 
 server.use('/api/auth', authRouter);
-server.use('/api/users', usersRouter) //TODO: Add restricted middleware!
-// server.use('/api/flows', flowsRouter);
+server.use('/api/users', restricted, usersRouter) 
 
 module.exports = server;

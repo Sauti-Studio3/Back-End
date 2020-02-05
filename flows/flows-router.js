@@ -2,16 +2,19 @@ const router = require('express').Router();
 const Flows = require('../flows/flows-model');
 const Pages = require('../pages/pages-model');
 const validateBody = require('../middleware/validate-body-middleware');
+const restrictUser = require('../middleware/restrict-user-middleware');
 
 // router.get('/',  (req, res) => {
 //   res.status(200).json({message: 'You got to the flows endpoint!'})
 // });
 
-router.get('/:id', validateFlowId, (req, res) => {
+// router.use(restrictUser('flows')); TODO: Doesn't work!
+
+router.get('/:id', validateFlowId, restrictUser('flows'), (req, res) => {
   const { id } = req.params;
   Flows.findById(id)
     .then(flow => {
-      console.log(flow.id);
+      // console.log(flow.id);
       Pages.findByFlowId(flow.id)
         .then(pages => {
           const flowWithPages = {
@@ -29,7 +32,7 @@ router.get('/:id', validateFlowId, (req, res) => {
     })
 })
 
-router.put('/:id', validateFlowId, validateBody('flows'), (req, res) => {
+router.put('/:id', validateFlowId, validateBody('flows'), restrictUser('flows'), (req, res) => {
   const { id } = req.params;
   const changes = req.body
   Flows.update(changes, id)
@@ -44,7 +47,7 @@ router.put('/:id', validateFlowId, validateBody('flows'), (req, res) => {
     });
 });
 
-router.delete('/:id', validateFlowId, (req, res) => {
+router.delete('/:id', validateFlowId, restrictUser('flows'), (req, res) => {
   const { id } = req.params;
   Flows.remove(id)
     .then(flow => {
@@ -59,6 +62,7 @@ router.delete('/:id', validateFlowId, (req, res) => {
 })
 
 function validateFlowId(req, res, next) {
+  console.log('req.body in validateFlowId', req.body);
   const { id } = req.params;
   Flows.findById(id) 
     .then(flow => {
