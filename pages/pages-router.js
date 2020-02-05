@@ -5,10 +5,6 @@ const restricted = require('../middleware/restricted-middleware');
 const restrictUser = require('../middleware/restrict-user-middleware');
 const validateBody = require('../middleware/validate-body-middleware');
 
-// router.get('/', (req, res) => {
-//   res.status(200).json({message: 'You have reached the pages route.'});
-// })
-
 router.use('/:id', validatPageId, validateBody('pages'), restrictUser('pages'));
 
 router.get('/:id', (req, res) => {
