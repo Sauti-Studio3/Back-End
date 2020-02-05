@@ -5,13 +5,10 @@ const optionsRouter = require('../options/options-router');
 const Users = require('../users/users-model');
 const Flows = require('../flows/flows-model');
 const validateBody = require('../middleware/validate-body-middleware');
+const restrictUser = require('../middleware/restrict-user-middleware');
 // const Pages = require('../pages/pages-model');
 
-router.get('/', (req, res) => {
-  res.status(200).json({message: 'You have reached users-router.'});
-});
-
-router.get('/:id/flows', validateUserId, (req, res) => {
+router.get('/:id/flows', validateUserId, restrictUser('users'), (req, res) => {
   const { id } = req.params;
   Flows.findByUserId(id)
     .then(flows => {

@@ -11,7 +11,8 @@ module.exports = (req, res, next) => {
           message: 'The JSON token has been tampered with. You cannot access this protected endpoint.'
         })
       } else {
-        req.user = decodedToken.user;
+        req.username = decodedToken.username;
+        // console.log('req.body in restricted', req.body);
         next();
       }
     })
