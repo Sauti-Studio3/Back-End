@@ -62,7 +62,6 @@ router.delete('/:id', validateFlowId, restrictUser('flows'), (req, res) => {
 })
 
 function validateFlowId(req, res, next) {
-  console.log('req.body in validateFlowId', req.body);
   const { id } = req.params;
   Flows.findById(id) 
     .then(flow => {
