@@ -4,17 +4,12 @@ const Pages = require('../pages/pages-model');
 const validateBody = require('../middleware/validate-body-middleware');
 const restrictUser = require('../middleware/restrict-user-middleware');
 
-// router.get('/',  (req, res) => {
-//   res.status(200).json({message: 'You got to the flows endpoint!'})
-// });
+router.use('/:id', validateFlowId, restrictUser('flows'))
 
-// router.use(restrictUser('flows')); TODO: Doesn't work!
-
-router.get('/:id', validateFlowId, restrictUser('flows'), (req, res) => {
+router.get('/:id', (req, res) => {
   const { id } = req.params;
   Flows.findById(id)
     .then(flow => {
-      // console.log(flow.id);
       Pages.findByFlowId(flow.id)
         .then(pages => {
           const flowWithPages = {
@@ -22,17 +17,17 @@ router.get('/:id', validateFlowId, restrictUser('flows'), (req, res) => {
             pages: pages
           }
           res.status(200).json(flowWithPages)
-        })
+        });
     })
     .catch(error => {
       console.log(error);
       res.status(500).json({
         error: 'Failed to get flow.'
-      })
-    })
-})
+      });
+    });
+});
 
-router.put('/:id', validateFlowId, validateBody('flows'), restrictUser('flows'), (req, res) => {
+router.put('/:id', validateBody('flows'), (req, res) => {
   const { id } = req.params;
   const changes = req.body
   Flows.update(changes, id)
@@ -47,7 +42,7 @@ router.put('/:id', validateFlowId, validateBody('flows'), restrictUser('flows'),
     });
 });
 
-router.delete('/:id', validateFlowId, restrictUser('flows'), (req, res) => {
+router.delete('/:id', (req, res) => {
   const { id } = req.params;
   Flows.remove(id)
     .then(flow => {
@@ -61,7 +56,7 @@ router.delete('/:id', validateFlowId, restrictUser('flows'), (req, res) => {
     });
 });
 
-router.post('/:id/pages', validateFlowId, restrictUser('flows'), validateBody('pages'), (req, res) => {
+router.post('/:id/pages', validateBody('pages'), (req, res) => {
   const { id } = req.params;
   const page = {
     ...req.body,

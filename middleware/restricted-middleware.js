@@ -12,7 +12,6 @@ module.exports = (req, res, next) => {
         })
       } else {
         req.username = decodedToken.username;
-        // console.log('req.body in restricted', req.body);
         next();
       }
     })

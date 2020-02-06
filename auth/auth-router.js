@@ -19,7 +19,7 @@ router.get('/users', (req, res) => {
     });
 });
 
-router.post('/register', validateBody('register'), (req, res) => { //TODO: Put validateBody back in if necessary.
+router.post('/register', validateBody('register'), (req, res) => { 
   const user = req.body;
   const hash = bc.hashSync(user.password, 10);
   user.password = hash;
