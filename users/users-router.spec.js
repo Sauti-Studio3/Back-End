@@ -51,18 +51,6 @@ describe('users-router', () => {
 
   describe('GET /:id/flows', () => {
 
-    // beforeAll(done => {
-    //   request(server)
-    //   .get(`/api/users/${userId}/flows`)
-    //   .set('Authorization', token)
-    //   .end((err, res) => {
-    //     it('returns 200 OK', () => {
-    //       expect(res.status).toBe(300);
-    //     })
-    //     done();
-    //   })
-    // })
-
     it('returns 200 OK', () => {
       request(server)
         .get(`/api/users/${userId}/flows`)
@@ -71,7 +59,7 @@ describe('users-router', () => {
           expect(res.status).toBe(200);
         });
     });
-
+//ugh
     it('returns an array of 1 element', () => {
       request(server)
         .get(`/api/users/${userId}/flows`)
