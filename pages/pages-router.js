@@ -1,7 +1,6 @@
 const router = require('express').Router();
 const Pages = require('../pages/pages-model');
 const Options = require('../options/options-model');
-const restricted = require('../middleware/restricted-middleware');
 const restrictUser = require('../middleware/restrict-user-middleware');
 const validateBody = require('../middleware/validate-body-middleware');
 
