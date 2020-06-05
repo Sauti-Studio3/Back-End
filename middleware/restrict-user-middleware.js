@@ -34,7 +34,6 @@ function restrictUser(endpoint) {
                 message: `Sorry. The flow with id ${flowIdParam} doesn't belong to you.`
               });
             }
-            // checkChildren(flowId, flows, endpoint); TODO: Check why this doesn't work!
           });
         break;
       
@@ -61,24 +60,5 @@ function restrictUser(endpoint) {
     }
   }
 }
-
-// function checkChildren(paramId, children, endpoint) {
-//   console.log('hello from checkChildren');
-//   return (req, res, next) => {
-//     console.log(children);
-//     const childIds = children.map(child => {
-//       const [childId] = Object.values(child);
-//       return childId;
-//     });
-//     if (childIds.includes(paramId)) {
-//       // console.log('next() should be called!');
-//       next();
-//     } else {
-//       res.status(401).json({
-//         message: `Sorry. The resource with id ${paramId} in table '${endpoint}' doesn't belong to you.`
-//       })
-//     }
-//   }
-// }
 
 module.exports = restrictUser;
