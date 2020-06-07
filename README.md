@@ -21,11 +21,9 @@ The back-end API is written in `Node`, `Express`, and `Knex`. It uses a `SQLite3
 
 ## Contributors
 
-| [Dan Hauer](https://github.com/dlhauer) |
-| :-------------------------------------: |
+[Dan Hauer](https://github.com/dlhauer)
 
-
-| [<img src="https://avatars0.githubusercontent.com/u/50860480?s=460&u=ab6997720219f59a214336ceb6088c308749c1f8&v=4" width = "200" />](https://github.com/dlhauer)
+[<img src="https://avatars0.githubusercontent.com/u/50860480?s=460&u=ab6997720219f59a214336ceb6088c308749c1f8&v=4" width = "200" />](https://github.com/dlhauer)
 
 ---
 
